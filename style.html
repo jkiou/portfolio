@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prakhar Portfolio</title>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      background: #0a0a0a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #e0e0e0;
+      overflow-y: auto;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    
+    .navbar {
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      padding: 20px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      border-bottom: 1px solid #333;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      background: rgba(10, 10, 10, 0.98);
+      padding: 15px 40px;
+    }
+    
+    .navbar h2 {
+      margin-left: 0;
+      font-size: 24px;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      flex-grow: 1;
+      justify-content: center;
+      gap: 40px;
+    }
+    
+    .navbar ul li a {
+      color: #b0b0b0;
+      text-decoration: none;
+      padding: 8px 0;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar ul li a:hover {
+      color: #fff;
+    }
+    
+    .navbar ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #6c63ff;
+      transition: width 0.3s ease;
+    }
+    
+    .navbar ul li a:hover::after {
+      width: 100%;
+    }
+    
+    .navbar button {
+      background: #6c63ff;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+    
+    .navbar button:hover {
+      background: #5a52d5;
+      transform: translateY(-1px);
+    }
+    
+    section {
+      min-height: 100vh;
+      padding: 80px 40px 40px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 60px;
+    }
+    
+    .text-content {
+      flex: 1;
+      max-width: 600px;
+    }
+    
+    .Hi_am {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+    
+    .subtitle {
+      font-size: 24px;
+      color: #6c63ff;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    
+    .h2h {
+      font-size: 18px;
+      color: #b0b0b0;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .cta-btn {
+      padding: 16px 32px;
+      border: 2px solid #6c63ff;
+      background: #6c63ff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .cta-btn:hover {
+      background: #5a52d5;
+      transform: translateY(-2px);
+    }
+    
+    .cta-btn.secondary {
+      background: transparent;
+      color: #6c63ff;
+    }
+    
+    .cta-btn.secondary:hover {
+      background: #6c63ff;
+      color: white;
+    }
+    
+    .spline-container {
+      flex: 1;
+      height: 600px;
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 70%);
+      border-radius: 20px;
+      overflow: hidden;
+      animation: containerGlow 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes containerGlow {
+      0% {
+        box-shadow: 
+          0 0 20px rgba(108, 99, 255, 0.1),
+          inset 0 0 50px rgba(108, 99, 255, 0.05);
+      }
+      100% {
+        box-shadow: 
+          0 0 40px rgba(108, 99, 255, 0.2),
+          inset 0 0 80px rgba(108, 99, 255, 0.1);
+      }
+    }
+    
+    .spline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 90%, rgba(108, 99, 255, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      animation: backgroundShift 8s ease-in-out infinite;
+      z-index: 1;
+    }
+    
+    @keyframes backgroundShift {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+      25% {
+        opacity: 0.8;
+        transform: scale(1.05) rotate(1deg);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.02) rotate(-0.5deg);
+      }
+      75% {
+        opacity: 0.9;
+        transform: scale(1.03) rotate(0.5deg);
+      }
+    }
+    
+    .spline-container::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(108, 99, 255, 0.03) 45deg,
+        transparent 90deg,
+        rgba(108, 99, 255, 0.02) 135deg,
+        transparent 180deg,
+        rgba(108, 99, 255, 0.03) 225deg,
+        transparent 270deg,
+        rgba(108, 99, 255, 0.02) 315deg,
+        transparent 360deg
+      );
+      animation: rotate 20s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    spline-viewer {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background: transparent;
+      border: none;
+      position: relative;
+      z-index: 2;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    spline-viewer:hover {
+      transform: scale(1.02);
+    }
+    
+    /* Enhanced Spline logo hiding - comprehensive removal */
+    spline-viewer::part(logo) {
+      display: none !important;
+    }
+    spline-viewer .spline-watermark {
+      display: none !important;
+    }
+    spline-viewer [class*="logo"],
+    spline-viewer [class*="watermark"],
+    spline-viewer [class*="spline"],
+    spline-viewer [class*="built"],
+    spline-viewer div[style*="position: absolute"][style*="bottom"],
+    spline-viewer div[style*="position: fixed"][style*="bottom"],
+    spline-viewer a[href*="spline"],
+    spline-viewer [style*="z-index: 999"],
+    spline-viewer [style*="z-index: 9999"],
+    spline-viewer [style*="position: fixed"],
+    spline-viewer > div:last-child,
+    spline-viewer canvas + div,
+    spline-viewer div[style*="pointer-events: auto"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    
+    /* Additional targeting for stubborn logos */
+    spline-viewer * {
+      pointer-events: none;
+    }
+    
+    spline-viewer canvas {
+      pointer-events: auto;
+    }
+    
+    /* Floating particles around spline */
+    .spline-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.6), transparent);
+      border-radius: 50%;
+      animation: floatAround 12s ease-in-out infinite;
+    }
+    
+    .particle:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+    .particle:nth-child(2) { top: 20%; left: 85%; animation-delay: 2s; }
+    .particle:nth-child(3) { top: 70%; left: 10%; animation-delay: 4s; }
+    .particle:nth-child(4) { top: 80%; left: 80%; animation-delay: 6s; }
+    .particle:nth-child(5) { top: 30%; left: 90%; animation-delay: 8s; }
+    .particle:nth-child(6) { top: 60%; left: 5%; animation-delay: 10s; }
+    
+    @keyframes floatAround {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+      }
+      25% {
+        transform: translate(20px, -30px) scale(1.2);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translate(-15px, -20px) scale(0.8);
+        opacity: 0.6;
+      }
+      75% {
+        transform: translate(25px, 15px) scale(1.1);
+        opacity: 0.7;
+      }
+    }
+    
+    .projects {
+      background: #080808;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .section-title {
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    
+    .section-subtitle {
+      font-size: 18px;
+      color: #b0b0b0;
+      margin-bottom: 60px;
+      max-width: 600px;
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      width: 100%;
+    }
+    
+    .project-card {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #6c63ff;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: #6c63ff;
+      box-shadow: 0 10px 30px rgba(108, 99, 255, 0.1);
+    }
+    
+    .project-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .project-title {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .project-description {
+      color: #b0b0b0;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .tech-tag {
+      background: #1a1a1a;
+      color: #6c63ff;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid #333;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .project-link {
+      color: #6c63ff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 16px;
+      border: 1px solid #6c63ff;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .project-link:hover {
+      background: #6c63ff;
+      color: white;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #1a1a1a;
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .navbar ul {
+        display: none;
+      }
+      
+      section {
+        padding: 80px 20px 40px;
+      }
+      
+      .hero {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+      }
+      
+      .Hi_am {
+        font-size: 40px;
+      }
+      
+      .subtitle {
+        font-size: 20px;
+      }
+      
+      .h2h {
+        font-size: 16px;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .spline-container {
+        height: 400px;
+      }
+      
+      .section-title {
+        font-size: 36px;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <h2>Prakhar</h2>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button onclick="scrollToSection('contact')">Get In Touch</button>
+  </nav>
+  
+  <section id="home">
+    <div class="hero">
+      <div class="text-content">
+        <h1 class="Hi_am">Hi, I'm Prakhar Rastogi</h1>
+        <p class="subtitle">Full Stack Developer</p>
+        <p class="h2h">
+          I craft digital experiences that blend cutting-edge technology with elegant design. Specializing in modern web applications, I turn complex problems into simple, beautiful solutions.
+        </p>
+        <div class="cta-buttons">
+          <a href="#projects" class="cta-btn">View Projects</a>
+          <a href="#contact" class="cta-btn secondary">Contact Me</a>
+        </div>
+      </div>
+      <div class="spline-container">
+        <div class="spline-particles">
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+        </div>
+        <spline-viewer url="https://prod.spline.design/puOl8McIf-qoZvXV/scene.splinecode"></spline-viewer>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <p class="section-subtitle">A showcase of my recent work, featuring modern web applications built with cutting-edge technologies.</p>
+    
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-image">Project Screenshot</div>
+        <h3 class="project-title">E-Commerce Platform</h3>
+        <p class="project-description">
+          A full-featured e-commerce platform with real-time inventory management, secure payment processing, and an intuitive admin dashboard.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Node.js</span>
+          <span class="tech-tag">MongoDB</span>
+          <span class="tech-tag">Stripe</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link">GitHub</a>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">Project Screenshot</div>
+        <h3 class="project-title">Task Management App</h3>
+        <p class="project-description">
+          A collaborative task management application with real-time updates, team collaboration features, and advanced analytics dashboard.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Vue.js</span>
+          <span class="tech-tag">Express</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Socket.io</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link">GitHub</a>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">Project Screenshot</div>
+        <h3 class="project-title">AI Chat Interface</h3>
+        <p class="project-description">
+          An intelligent chat interface powered by machine learning, featuring natural language processing and context-aware responses.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">FastAPI</span>
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">TensorFlow</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link">GitHub</a>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">Project Screenshot</div>
+        <h3 class="project-title">Analytics Dashboard</h3>
+        <p class="project-description">
+          A comprehensive analytics dashboard with interactive data visualizations, real-time metrics, and customizable reporting features.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">D3.js</span>
+          <span class="tech-tag">Redis</span>
+          <span class="tech-tag">Docker</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link">GitHub</a>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">Project Screenshot</div>
+        <h3 class="project-title">Mobile Banking App</h3>
+        <p class="project-description">
+          A secure mobile banking application with biometric authentication, transaction history, and budget tracking capabilities.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">React Native</span>
+          <span class="tech-tag">Firebase</span>
+          <span class="tech-tag">GraphQL</span>
+          <span class="tech-tag">AWS</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link">GitHub</a>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">Project Screenshot</div>
+        <h3 class="project-title">Social Media Platform</h3>
+        <p class="project-description">
+          A modern social media platform with real-time messaging, content sharing, and advanced privacy controls for user safety.
+        </p>
+        <div class="project-tech">
+          <span class="tech-tag">Angular</span>
+          <span class="tech-tag">NestJS</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">WebSocket</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo</a>
+          <a href="#" class="project-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
